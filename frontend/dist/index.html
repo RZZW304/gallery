@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RZZW's Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --harvest-orange: #ff7b00;
+            --dark-orange: #ff8800;
+            --deep-saffron: #ff9500;
+            --amber-glow: #ffa200;
+            --orange: #ffaa00;
+            --amber-flame: #ffb700;
+            --school-bus-yellow: #ffc300;
+            --bright-amber: #ffd000;
+            --bright-gold: #ffdd00;
+            --sunbeam-yellow: #ffea00;
+            --alice-blue: #e3f2fd;
+            --icy-blue: #bbdefb;
+            --sky-blue: #90caf9;
+            --cool-sky: #64b5f6;
+            --cool-sky-2: #42a5f5;
+            --dodger-blue: #2196f3;
+            --brilliant-azure: #1e88e5;
+            --twitter-blue: #1976d2;
+            --ocean-deep: #1565c0;
+            --cobalt-blue: #0d47a1;
+            --ink-black: #001219;
+            --dark-teal: #005f73;
+            --dark-cyan: #0a9396;
+            --pearl-aqua: #94d2bd;
+            --vanilla-custard: #e9d8a6;
+            --golden-orange: #ee9b00;
+            --burnt-caramel: #ca6702;
+            --rusty-spice: #bb3e03;
+            --oxidized-iron: #ae2012;
+            --brown-red: #9b2226;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--ink-black) 0%, var(--dark-teal) 50%, var(--dark-cyan) 100%);
+            min-height: 100vh;
+            color: #eee;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to bottom, var(--cobalt-blue), var(--ocean-deep));
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-bottom: 4px solid var(--golden-orange);
+            position: relative;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 2.8em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 3px;
+        }
+
+        header nav {
+            margin-top: 15px;
+        }
+
+        header nav a {
+            color: var(--pearl-aqua);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            transition: color 0.2s;
+        }
+
+        header nav a:hover {
+            color: #fff;
+        }
+
+        /* Loading */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--pearl-aqua-2);
+            border-top: 5px solid var(--cobalt-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Album Grid */
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .album-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .album-card:nth-child(1) { animation-delay: 0ms; }
+        .album-card:nth-child(2) { animation-delay: 50ms; }
+        .album-card:nth-child(3) { animation-delay: 100ms; }
+        .album-card:nth-child(4) { animation-delay: 150ms; }
+        .album-card:nth-child(5) { animation-delay: 200ms; }
+        .album-card:nth-child(6) { animation-delay: 250ms; }
+
+        .album-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--pearl-aqua) 0%, var(--golden-orange) 100%);
+        }
+
+        .album-cover-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--pearl-aqua) 0%, var(--golden-orange) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .album-info {
+            padding: 15px;
+        }
+
+        .album-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--cobalt-blue);
+            margin-bottom: 8px;
+        }
+
+        .album-description {
+            font-size: 0.95em;
+            color: #ddd;
+            line-height: 1.4;
+        }
+
+        .album-meta {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        /* Album Page */
+        .album-header {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .album-header h2 {
+            font-size: 2.2em;
+            color: var(--cobalt-blue);
+            margin-bottom: 10px;
+        }
+
+        .album-full-description {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .photo-details {
+            padding: 12px;
+        }
+
+        .photo-title {
+            font-weight: 600;
+            color: var(--ocean-deep);
+            margin-bottom: 5px;
+        }
+
+        .photo-description {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* Rating */
+        .rating-container {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 3px;
+        }
+
+        .rating-star {
+            font-size: 1.3em;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .rating-star.active,
+        .rating-star:hover {
+            color: #f5c518;
+        }
+
+        .rating-info {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .rating-login-prompt {
+            font-size: 0.85em;
+            color: var(--dodger-blue);
+            margin-top: 8px;
+        }
+
+        .rating-login-prompt a {
+            color: var(--dark-cyan);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Edit Icons */
+        .edit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            cursor: pointer;
+            margin-left: 8px;
+            transition: background 0.2s;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .edit-btn:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
+        .edit-btn-album {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+
+        .editable-title {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .editable-title:hover {
+            opacity: 0.8;
+        }
+
+        .admin-actions-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-album-view {
+            position: relative;
+        }
+
+        .admin-album-view .edit-btn-album {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+
+        .admin-photo-edit {
+            position: relative;
+        }
+
+        .admin-photo-edit .edit-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 5;
+        }
+
+        .inline-edit-input {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--golden-orange);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        /* Auth Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal h3 {
+            color: var(--cobalt-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--golden-orange);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(to bottom, var(--dodger-blue), var(--ocean-deep));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to bottom, var(--cool-sky-2), var(--dodger-blue));
+        }
+
+        .btn-secondary {
+            background: #eee;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: var(--golden-orange);
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Admin Panel */
+        .admin-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-header h2 {
+            color: var(--cobalt-blue);
+        }
+
+        .admin-section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .admin-section h3 {
+            color: var(--ocean-deep);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--pearl-aqua-2);
+        }
+
+        .admin-album-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .admin-album-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid var(--golden-orange);
+        }
+
+        .admin-album-info h4 {
+            color: var(--cobalt-blue);
+            margin-bottom: 5px;
+        }
+
+        .admin-album-info span {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .admin-album-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: var(--cobalt-blue);
+            margin-bottom: 25px;
+        }
+
+        /* Upload */
+        .upload-zone {
+            border: 3px dashed var(--golden-orange);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .upload-zone:hover {
+            background: rgba(118, 200, 147, 0.1);
+        }
+
+        .upload-zone.dragover {
+            background: rgba(118, 200, 147, 0.2);
+        }
+
+        .upload-progress {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--golden-orange), var(--dodger-blue));
+            transition: width 0.3s;
+        }
+
+        .photo-upload-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .photo-upload-item img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .photo-upload-info {
+            flex: 1;
+        }
+
+        .photo-upload-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* User Bar */
+        .user-bar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-bar span {
+            color: var(--pearl-aqua);
+            font-size: 0.95em;
+        }
+
+        .user-bar a {
+            color: var(--pearl-aqua);
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .user-bar a:hover {
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #fff;
+            margin-top: 50px;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .albums-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .album-header h2 {
+                font-size: 1.6em;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #777;
+        }
+
+        .empty-state h3 {
+            color: var(--cobalt-blue);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        const API_BASE = '';
+        
+        const COLORS = {
+            limeCream: '#d9ed92',
+            lightGreen: '#b5e48c',
+            lightGreen2: '#99d98c',
+            emerald: '#76c893',
+            oceanMist: '#52b69a',
+            tropicalTeal: '#34a0a4',
+            bondiBlue: '#168aad',
+            cerulean: '#1a759f',
+            balticBlue: '#1e6091',
+            yaleBlue: '#184e77'
+        };
+
+        let currentUser = null;
+        let userToken = null;
+
+        function loadUserFromStorage() {
+            const stored = localStorage.getItem('gallery_user');
+            if (stored) {
+                const data = JSON.parse(stored);
+                currentUser = data.user;
+                userToken = data.token;
+            }
+        }
+
+        function saveUserToStorage(user, token) {
+            localStorage.setItem('gallery_user', JSON.stringify({ user, token }));
+            currentUser = user;
+            userToken = token;
+        }
+
+        function clearUserFromStorage() {
+            localStorage.removeItem('gallery_user');
+            currentUser = null;
+            userToken = null;
+        }
+
+        async function apiCall(endpoint, options = {}) {
+            const defaultHeaders = {
+                'Content-Type': 'application/json',
+            };
+            
+            if (currentUser && userToken) {
+                defaultHeaders['X-User-ID'] = currentUser.id;
+                defaultHeaders['X-Token'] = userToken;
+            }
+
+            const response = await fetch(`${API_BASE}${endpoint}`, {
+                ...options,
+                headers: { ...defaultHeaders, ...options.headers }
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Request failed');
+            }
+            
+            return data;
+        }
+
+        function renderHeader(nav = true) {
+            return `
+                <header>
+                    <div class="user-bar">
+                        ${currentUser ? `
+                            <span>Welcome, ${currentUser.username}!</span>
+                            <a onclick="logout()">Logout</a>
+                        ` : `
+                            <a onclick="showAuthModal('login')">Login</a>
+                            <a onclick="showAuthModal('register')">Register</a>
+                        `}
+                    </div>
+                    <h1><a href="/" style="color:inherit;text-decoration:none;">RZZW's Gallery</a></h1>
+                </header>
+            `;
+        }
+
+        function renderFooter() {
+            return `
+                <footer>
+                    <p>&copy; 2024 RZZW's Gallery. All rights reserved.</p>
+                </footer>
+            `;
+        }
+
+        function renderLoading() {
+            return `
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                </div>
+            `;
+        }
+
+        async function renderHome() {
+            const app = document.getElementById('app');
+            app.innerHTML = renderHeader() + '<div class="container"><div class="loading-container"><div class="spinner"></div></div></div>' + renderFooter();
+
+            try {
+                const albums = await apiCall('/api/albums');
+                
+                app.innerHTML = renderHeader() + `
+                    <div class="container">
+                        <h2 style="text-align:center;margin:30px 0;color:var(--vanilla-custard);">My Albums</h2>
+                        ${albums.length === 0 ? `
+                            <div class="empty-state">
+                                <h3>No albums</h3>
+                                <p>Go to admin panel to create your first album.</p>
+                            </div>
+                        ` : `
+                            <div class="albums-grid fade-in">
+                                ${albums.map((album, index) => `
+                                    <a href="/album/${album.slug}" class="album-card" style="animation-delay: ${index * 50}ms">
+                                        ${album.cover_image ? `
+                                            <img src="/uploads/albums/${album.cover_image}" alt="${album.title}" class="album-cover">
+                                        ` : `
+                                            <div class="album-cover-placeholder">📷</div>
+                                        `}
+                                        <div class="album-info">
+                                            <div class="album-title">${album.title}</div>
+                                            <div class="album-description">${album.short_description || 'Brak opisu'}</div>
+                                            <div class="album-meta">${album.photo_count || 0} photos</div>
+                                        </div>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                ` + renderFooter();
+            } catch (error) {
+                app.innerHTML = renderHeader() + `
+                    <div class="container">
+                        <div class="error-message">Error: ${error.message}</div>
+                    </div>
+                ` + renderFooter();
+            }
+        }
+
+        async function renderAlbum(slug) {
+            const app = document.getElementById('app');
+            app.innerHTML = renderHeader() + '<div class="container"><div class="loading-container"><div class="spinner"></div></div></div>' + renderFooter();
+
+            try {
+                const data = await apiCall(`/api/albums/${slug}`);
+                
+                app.innerHTML = renderHeader() + `
+                    <div class="container fade-in">
+                        <a href="/" style="color:var(--dodger-blue);text-decoration:none;display:inline-block;margin:20px 0;">← Back</a>
+                        
+                        <div class="album-header">
+                            <h2>${data.album.title}</h2>
+                            ${data.album.full_description ? `
+                                <p class="album-full-description">${data.album.full_description}</p>
+                            ` : ''}
+                        </div>
+                        
+                        ${data.photos.length === 0 ? `
+                            <div class="empty-state">
+                                <h3 style="color:var(--vanilla-custard);">No photos</h3>
+                            </div>
+                        ` : `
+                            <div class="photos-grid">
+                                ${data.photos.map((photo, index) => renderPhotoCard(photo, index)).join('')}
+                            </div>
+                        `}
+                    </div>
+                ` + renderFooter();
+                
+                setupRatingListeners();
+            } catch (error) {
+                app.innerHTML = renderHeader() + `
+                    <div class="container">
+                        <a href="/" style="color:var(--dodger-blue);text-decoration:none;display:inline-block;margin:20px 0;">← Back</a>
+                        <div class="error-message">Error: ${error.message}</div>
+                    </div>
+                ` + renderFooter();
+            }
+        }
+
+        function renderPhotoCard(photo, index) {
+            const userRating = photo.userRating || 0;
+            
+            return `
+                <div class="photo-card fade-in" style="animation-delay: ${index * 50}ms">
+                    <img src="/uploads/photos/${photo.filename}" 
+                         alt="${photo.title || 'Zdjęcie'}" 
+                         onclick="showLightbox('/uploads/photos/${photo.filename}')"
+                         loading="lazy">
+                    <div class="photo-details">
+                        ${photo.title ? `<div class="photo-title">${photo.title}</div>` : ''}
+                        ${photo.description ? `<div class="photo-description">${photo.description}</div>` : ''}
+                        
+                        <div class="rating-container" data-photo-id="${photo.id}">
+                            <div class="rating-stars">
+                                ${[1,2,3,4,5].map(star => `
+                                    <span class="rating-star ${star <= userRating ? 'active' : ''}" 
+                                          data-star="${star}"
+                                          onclick="ratePhoto(${photo.id}, ${star})">★</span>
+                                `).join('')}
+                            </div>
+                            <div class="rating-info">
+                                ${photo.average_rating > 0 ? `${photo.average_rating}/5 (${photo.rating_count} votes)` : 'Not rated yet'}
+                            </div>
+                            ${!currentUser ? `
+                                <div class="rating-login-prompt">
+                                    <a onclick="showAuthModal('login')">Login</a> to rate
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setupRatingListeners() {
+            document.querySelectorAll('.rating-star').forEach(star => {
+                star.addEventListener('mouseenter', (e) => {
+                    const container = e.target.closest('.rating-container');
+                    const stars = container.querySelectorAll('.rating-star');
+                    const hoverStar = parseInt(e.target.dataset.star);
+                    
+                    stars.forEach((s, i) => {
+                        s.classList.toggle('active', i < hoverStar);
+                    });
+                });
+                
+                star.addEventListener('mouseleave', (e) => {
+                    const container = e.target.closest('.rating-container');
+                    const stars = container.querySelectorAll('.rating-star');
+                    const currentRating = container.dataset.currentRating || 0;
+                    
+                    stars.forEach((s, i) => {
+                        s.classList.toggle('active', i < parseInt(currentRating));
+                    });
+                });
+            });
+        }
+
+        async function ratePhoto(photoId, score) {
+            if (!currentUser) {
+                showAuthModal('login');
+                return;
+            }
+            
+            try {
+                const result = await apiCall('/api/rate', {
+                    method: 'POST',
+                    body: JSON.stringify({ photo_id: photoId, score })
+                });
+                
+                const container = document.querySelector(`[data-photo-id="${photoId}"]`);
+                const ratingInfo = container.querySelector('.rating-info');
+                ratingInfo.textContent = `${result.average_rating}/5 (${result.rating_count} gł.)`;
+                
+                container.dataset.currentRating = score;
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function showLightbox(src) {
+            const app = document.getElementById('app');
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.id = 'lightbox';
+            lightbox.innerHTML = `
+                <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+                <img src="${src}" alt="Preview">
+            `;
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.body.appendChild(lightbox);
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) lightbox.remove();
+        }
+
+        async function renderAdminLogin() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                ${renderHeader(false)}
+                <div class="login-container">
+                    <div class="login-box fade-in">
+                        <h2 style="color:var(--vanilla-custard);">Admin Panel</h2>
+                        <form onsubmit="handleAdminLogin(event)">
+                            <div class="form-group">
+                                <label>Password:</label>
+                                <input type="password" id="admin-password" required>
+                            </div>
+                            <div id="login-error" class="error-message" style="display:none;"></div>
+                            <button type="submit" class="btn btn-primary" style="width:100%;">Zaloguj</button>
+                        </form>
+                        <div style="text-align:center;margin-top:15px;">
+                            <a href="/" style="color:var(--dodger-blue);">← Back do strony głównej</a>
+                        </div>
+                    </div>
+                </div>
+                ${renderFooter()}
+            `;
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            const errorEl = document.getElementById('login-error');
+            
+            try {
+                const result = await apiCall('/api/admin/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ password })
+                });
+                
+                window.location.hash = '#/panel/dashboard';
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function renderAdminDashboard() {
+            const app = document.getElementById('app');
+            app.innerHTML = renderHeader() + '<div class="container"><div class="loading-container"><div class="spinner"></div></div></div>' + renderFooter();
+
+            try {
+                const statusRes = await fetch(`${API_BASE}/api/admin/status`);
+                const status = await statusRes.json();
+                
+                if (!status.authenticated) {
+                    window.location.hash = '#/panel';
+                    return;
+                }
+            } catch (e) {
+                window.location.hash = '#/panel';
+                return;
+            }
+
+            try {
+                const albums = await apiCall('/api/albums');
+                
+                app.innerHTML = renderHeader() + `
+                    <div class="container fade-in">
+                        <div class="admin-actions-bar">
+                            <button class="btn btn-primary" onclick="showCreateAlbumModal()">+ New Album</button>
+                            <button class="btn btn-secondary" onclick="logoutAdmin()">Logout</button>
+                        </div>
+                        
+                        <h2 style="text-align:center;margin:30px 0;color:var(--vanilla-custard);">Albums</h2>
+                        
+                        ${albums.length === 0 ? `
+                            <div class="empty-state">
+                                <h3>No albums</h3>
+                                <p>Create your first album.</p>
+                            </div>
+                        ` : `
+                            <div class="albums-grid">
+                                ${albums.map((album, index) => `
+                                    <div class="album-card admin-album-view" style="position:relative;animation-delay: ${index * 50}ms">
+                                        <span class="edit-btn edit-btn-album" onclick="event.preventDefault();event.stopPropagation();document.getElementById('cover-upload-${album.id}').click()">✎</span>
+                                        <input type="file" id="cover-upload-${album.id}" accept="image/*" style="display:none" onchange="uploadCoverFromDashboard(${album.id}, this.files[0])">
+                                        <a href="/panel/album/${album.slug}" style="display:block;text-decoration:none;color:inherit;">
+                                            ${album.cover_image ? `
+                                                <img src="/uploads/albums/${album.cover_image}" alt="${album.title}" class="album-cover">
+                                            ` : `
+                                                <div class="album-cover-placeholder" onclick="event.preventDefault();event.stopPropagation();document.getElementById('cover-upload-${album.id}').click()">📷</div>
+                                            `}
+                                            <div class="album-info">
+                                                <div class="album-title">
+                                                    <span class="editable-title" onclick="event.preventDefault();event.stopPropagation();showEditAlbumModal(${album.id})">${album.title}</span>
+                                                    <span class="edit-btn" onclick="event.preventDefault();event.stopPropagation();showEditAlbumModal(${album.id})">✎</span>
+                                                </div>
+                                                <div class="album-description">
+                                                    <span onclick="event.preventDefault();event.stopPropagation();editAlbumField(${album.id}, 'short_description')">${album.short_description || 'no description'}</span>
+                                                    <span class="edit-btn" style="width:18px;height:18px;font-size:12px;" onclick="event.preventDefault();event.stopPropagation();editAlbumField(${album.id}, 'short_description')">✎</span>
+                                                </div>
+                                                <div class="album-meta">${album.photo_count || 0} photos</div>
+                                            </div>
+                                        </a>
+                                        <div style="padding:10px;display:flex;gap:5px;">
+                                            <button class="btn btn-primary btn-small" onclick="showUploadPhotosModal(${album.id}, '${album.slug}', '${album.title.replace(/'/g, "\\'")}')">+ Photos</button>
+                                            <button class="btn btn-danger btn-small" onclick="deleteAlbum(${album.id})">Delete</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                ` + renderFooter();
+            } catch (error) {
+                app.innerHTML = renderHeader() + `
+                    <div class="container">
+                        <div class="error-message">Error: ${error.message}</div>
+                    </div>
+                ` + renderFooter();
+            }
+        }
+
+        async function renderAdminAlbum(slug) {
+            const app = document.getElementById('app');
+            app.innerHTML = renderHeader() + '<div class="container"><div class="loading-container"><div class="spinner"></div></div></div>' + renderFooter();
+
+            try {
+                const data = await apiCall(`/api/albums/${slug}`);
+                
+                app.innerHTML = renderHeader() + `
+                    <div class="container fade-in">
+                        <a href="/panel" style="color:var(--dodger-blue);text-decoration:none;display:inline-block;margin:20px 0;">← Back to Albums</a>
+                        
+                        <div class="album-header">
+                            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                                <h2>
+                                    <span class="editable-title" onclick="editAlbumField(${data.album.id}, 'title')">${data.album.title}</span>
+                                    <span class="edit-btn" onclick="editAlbumField(${data.album.id}, 'title')">✎</span>
+                                </h2>
+                                <div style="display:flex;gap:10px;">
+                                    <button class="btn btn-primary" onclick="showUploadPhotosModal(${data.album.id}, '${data.album.slug}', '${data.album.title.replace(/'/g, "\\'")}')">+ Add Photos</button>
+                                    <button class="btn btn-danger" onclick="deleteAlbum(${data.album.id})">Delete Album</button>
+                                </div>
+                            </div>
+                            ${data.album.full_description ? `
+                                <p class="album-full-description">
+                                    <span onclick="editAlbumField(${data.album.id}, 'full_description')">${data.album.full_description}</span>
+                                    <span class="edit-btn" style="width:18px;height:18px;font-size:12px;" onclick="editAlbumField(${data.album.id}, 'full_description')">✎</span>
+                                </p>
+                            ` : `<p style="margin-top:10px;"><a onclick="editAlbumField(${data.album.id}, 'full_description')" style="color:var(--dodger-blue);cursor:pointer;">+ Add description</a></p>`}
+                        </div>
+                        
+                        <div class="album-cover-section" style="margin:20px 0;padding:20px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                            <h3 style="color:var(--vanilla-custard);margin-bottom:15px;">Cover Photo</h3>
+                            ${data.album.cover_image ? `
+                                <div style="position:relative;display:inline-block;">
+                                    <img src="/uploads/albums/${data.album.cover_image}" alt="Cover" style="max-width:300px;border-radius:8px;">
+                                    <span class="edit-btn" style="position:absolute;top:10px;right:10px;" onclick="document.getElementById('cover-upload').click()">✎</span>
+                                </div>
+                            ` : `
+                                <div style="text-align:center;padding:40px;border:2px dashed rgba(255,255,255,0.3);border-radius:8px;">
+                                    <p style="margin-bottom:15px;">No cover photo</p>
+                                `}
+                                    <button class="btn btn-primary" onclick="document.getElementById('cover-upload').click()">Upload Cover</button>
+                                </div>
+                            `}
+                            <input type="file" id="cover-upload" accept="image/*" style="display:none" onchange="uploadCoverPhoto(${data.album.id}, this.files[0])">
+                        </div>
+                        
+                        ${data.photos.length === 0 ? `
+                            <div class="empty-state">
+                                <h3 style="color:var(--vanilla-custard);">No photos</h3>
+                                <button class="btn btn-primary" onclick="showUploadPhotosModal(${data.album.id}, '${data.album.slug}', '${data.album.title.replace(/'/g, "\\'")}')">Add Photos</button>
+                            </div>
+                        ` : `
+                            <div class="photos-grid">
+                                ${data.photos.map((photo, index) => `
+                                    <div class="photo-card admin-photo-edit" style="position:relative;">
+                                        <span class="edit-btn edit-btn-album" onclick="showEditPhotoModal(${photo.id}, '${photo.title || ''}', '${photo.description || ''}')">✎</span>
+                                        <img src="/uploads/photos/${photo.filename}" 
+                                             alt="${photo.title || 'Photo'}" 
+                                             onclick="showLightbox('/uploads/photos/${photo.filename}')"
+                                             loading="lazy">
+                                        <div class="photo-details">
+                                            ${photo.title ? `
+                                                <div class="photo-title">
+                                                    <span onclick="editPhotoField(${photo.id}, 'title')">${photo.title}</span>
+                                                    <span class="edit-btn" style="width:18px;height:18px;font-size:12px;" onclick="editPhotoField(${photo.id}, 'title')">✎</span>
+                                                </div>
+                                            ` : `<div class="photo-title"><a onclick="editPhotoField(${photo.id}, 'title')" style="color:var(--dodger-blue);cursor:pointer;">+ Add title</a></div>`}
+                                            
+                                            ${photo.description ? `
+                                                <div class="photo-description">
+                                                    <span onclick="editPhotoField(${photo.id}, 'description')">${photo.description}</span>
+                                                    <span class="edit-btn" style="width:18px;height:18px;font-size:12px;" onclick="editPhotoField(${photo.id}, 'description')">✎</span>
+                                                </div>
+                                            ` : `<div class="photo-description"><a onclick="editPhotoField(${photo.id}, 'description')" style="color:var(--dodger-blue);cursor:pointer;">+ Add description</a></div>`}
+                                            
+                                            <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;">
+                                                <div class="rating-info">
+                                                    ${photo.average_rating > 0 ? `${photo.average_rating}/5 (${photo.rating_count} votes)` : 'Not rated'}
+                                                </div>
+                                                <button class="btn btn-danger btn-small" onclick="deletePhoto(${photo.id})" style="padding:4px 8px;font-size:12px;">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                ` + renderFooter();
+            } catch (error) {
+                app.innerHTML = renderHeader() + `
+                    <div class="container">
+                        <a href="/panel" style="color:var(--dodger-blue);text-decoration:none;display:inline-block;margin:20px 0;">← Back</a>
+                        <div class="error-message">Error: ${error.message}</div>
+                    </div>
+                ` + renderFooter();
+            }
+        }
+
+        function editAlbumField(albumId, field) {
+            const newValue = prompt(`Edit ${field.replace('_', ' ')}:`);
+            if (newValue === null) return;
+            
+            const formData = new FormData();
+            formData.append(field, newValue);
+            
+            fetch(`${API_BASE}/api/admin/albums/${albumId}`, {
+                method: 'PUT',
+                body: formData,
+                headers: getAdminHeaders()
+            }).then(res => res.json())
+              .then(data => {
+                  renderAdminDashboard();
+              })
+              .catch(err => alert('Error: ' + err.message));
+        }
+
+        function editPhotoField(photoId, field) {
+            const newValue = prompt(`Edit ${field}:`);
+            if (newValue === null) return;
+            
+            const formData = new FormData();
+            formData.append(field, newValue);
+            
+            fetch(`${API_BASE}/api/admin/photos/${photoId}`, {
+                method: 'PUT',
+                body: formData,
+                headers: getAdminHeaders()
+            }).then(res => res.json())
+              .then(data => {
+                  const hash = window.location.hash;
+                  const path = window.location.pathname;
+                  const slug = path.replace('/panel/album/', '');
+                  renderAdminAlbum(slug);
+              })
+              .catch(err => alert('Error: ' + err.message));
+        }
+
+        function showEditPhotoModal(photoId, currentTitle, currentDescription) {
+            showModal(`
+                <h3>Edit Photo</h3>
+                <form onsubmit="handleEditPhoto(event, ${photoId})">
+                    <div class="form-group">
+                        <label>Title:</label>
+                        <input type="text" id="edit-photo-title" value="${currentTitle}">
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <textarea id="edit-photo-desc" rows="3">${currentDescription}</textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-danger" onclick="deletePhoto(${photoId})">Delete</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            `);
+        }
+
+        function handleEditPhoto(e, photoId) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('edit-photo-title').value);
+            formData.append('description', document.getElementById('edit-photo-desc').value);
+            
+            fetch(`${API_BASE}/api/admin/photos/${photoId}`, {
+                method: 'PUT',
+                body: formData,
+                headers: getAdminHeaders()
+            }).then(res => res.json())
+              .then(data => {
+                  closeModal();
+                  const hash = window.location.hash;
+                  const path = window.location.pathname;
+                  const slug = path.replace('/panel/album/', '');
+                  renderAdminAlbum(slug);
+              })
+              .catch(err => alert('Error: ' + err.message));
+        }
+
+        function deletePhoto(photoId) {
+            if (!confirm('Delete this photo?')) return;
+            
+            fetch(`${API_BASE}/api/admin/photos/${photoId}`, {
+                method: 'DELETE',
+                headers: getAdminHeaders()
+            }).then(res => res.json())
+              .then(data => {
+                  const path = window.location.pathname;
+                  const slug = path.replace('/panel/album/', '');
+                  renderAdminAlbum(slug);
+              })
+              .catch(err => alert('Error: ' + err.message));
+        }
+
+        function uploadCoverPhoto(albumId, file) {
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('cover', file);
+            
+            fetch(`${API_BASE}/api/admin/albums/${albumId}`, {
+                method: 'PUT',
+                body: formData,
+                headers: getAdminHeaders()
+            }).then(res => res.json())
+              .then(data => {
+                  renderAdminAlbum(window.location.pathname.replace('/panel/album/', ''));
+              })
+              .catch(err => alert('Error: ' + err.message));
+        }
+
+        function uploadCoverFromDashboard(albumId, file) {
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('cover', file);
+            
+            fetch(`${API_BASE}/api/admin/albums/${albumId}`, {
+                method: 'PUT',
+                body: formData,
+                headers: getAdminHeaders()
+            }).then(res => res.json())
+              .then(data => {
+                  renderAdminDashboard();
+              })
+              .catch(err => alert('Error: ' + err.message));
+        }
+
+        function showModal(content) {
+            const overlay = document.createElement('div');
+            overlay.className = 'modal-overlay';
+            overlay.id = 'modal-overlay';
+            overlay.innerHTML = `
+                <div class="modal fade-in">
+                    ${content}
+                </div>
+            `;
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeModal();
+            });
+            document.body.appendChild(overlay);
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            if (overlay) overlay.remove();
+        }
+
+        function showCreateAlbumModal() {
+            showModal(`
+                <h3>Create new album</h3>
+                <form onsubmit="handleCreateAlbum(event)">
+                    <div class="form-group">
+                        <label>Album title:</label>
+                        <input type="text" id="album-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Short description (max 50 chars):</label>
+                        <input type="text" id="album-short-desc" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Full description (optional):</label>
+                        <textarea id="album-full-desc" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Cover:</label>
+                        <input type="file" id="album-cover" accept="image/*">
+                    </div>
+                    <div id="album-error" class="error-message" style="display:none;"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            `);
+        }
+
+        async function handleCreateAlbum(e) {
+            e.preventDefault();
+            const errorEl = document.getElementById('album-error');
+            errorEl.style.display = 'none';
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('album-title').value);
+            formData.append('short_description', document.getElementById('album-short-desc').value);
+            formData.append('full_description', document.getElementById('album-full-desc').value);
+            
+            const coverFile = document.getElementById('album-cover').files[0];
+            if (coverFile) {
+                formData.append('cover', coverFile);
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/albums`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: getAdminHeaders()
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error);
+                }
+                
+                closeModal();
+                renderAdminDashboard();
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function showEditAlbumModal(albumId) {
+            try {
+                const albums = await apiCall('/api/albums');
+                const album = albums.find(a => a.id === albumId);
+                
+                if (!album) return;
+                
+                showModal(`
+                    <h3>Edit album</h3>
+                    <form onsubmit="handleEditAlbum(event, ${albumId})">
+                        <div class="form-group">
+                            <label>Album title:</label>
+                            <input type="text" id="edit-album-title" value="${album.title}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Short description (max 50 chars):</label>
+                            <input type="text" id="edit-album-short-desc" value="${album.short_description || ''}" maxlength="50">
+                        </div>
+                        <div class="form-group">
+                            <label>Full description:</label>
+                            <textarea id="edit-album-full-desc" rows="4">${album.full_description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Nowa okładka (opcjonalnie):</label>
+                            <input type="file" id="edit-album-cover" accept="image/*">
+                        </div>
+                        <div id="edit-album-error" class="error-message" style="display:none;"></div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                `);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        async function handleEditAlbum(e, albumId) {
+            e.preventDefault();
+            const errorEl = document.getElementById('edit-album-error');
+            errorEl.style.display = 'none';
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('edit-album-title').value);
+            formData.append('short_description', document.getElementById('edit-album-short-desc').value);
+            formData.append('full_description', document.getElementById('edit-album-full-desc').value);
+            
+            const coverFile = document.getElementById('edit-album-cover').files[0];
+            if (coverFile) {
+                formData.append('cover', coverFile);
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/albums/${albumId}`, {
+                    method: 'PUT',
+                    body: formData,
+                    headers: getAdminHeaders()
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error);
+                }
+                
+                closeModal();
+                renderAdminDashboard();
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function deleteAlbum(albumId) {
+            if (!confirm('Are you sure you want to delete this album? All photos will also be deleted.')) {
+                return;
+            }
+            
+            try {
+                await apiCall(`/api/admin/albums/${albumId}`, { method: 'DELETE' });
+                renderAdminDashboard();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function showUploadPhotosModal(albumId, slug, title) {
+            showModal(`
+                <h3>Add photos to: ${title}</h3>
+                <form onsubmit="handleUploadPhotos(event, ${albumId})">
+                    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('photo-input').click()">
+                        <p>Click or drag photos here</p>
+                        <input type="file" id="photo-input" multiple accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+                    </div>
+                    <div id="selected-files"></div>
+                    <div class="upload-progress" style="display:none;" id="upload-progress">
+                        <div class="upload-progress-bar" id="upload-progress-bar" style="width:0%"></div>
+                    </div>
+                    <div class="form-group" style="margin-top:15px;">
+                        <label>Photo title (optional):</label>
+                        <input type="text" id="photo-title">
+                    </div>
+                    <div class="form-group">
+                        <label>Photo description (optional):</label>
+                        <textarea id="photo-desc" rows="2"></textarea>
+                    </div>
+                    <div id="upload-error" class="error-message" style="display:none;"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="upload-btn">Upload</button>
+                    </div>
+                </form>
+            `);
+            
+            setupUploadZone();
+        }
+
+        let selectedFiles = [];
+
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files);
+            selectedFiles = [...selectedFiles, ...files];
+            renderSelectedFiles();
+        }
+
+        function renderSelectedFiles() {
+            const container = document.getElementById('selected-files');
+            container.innerHTML = selectedFiles.map((file, index) => `
+                <div class="photo-upload-item">
+                    <img src="${URL.createObjectURL(file)}" alt="Preview">
+                    <div class="photo-upload-info">
+                        <strong>${file.name}</strong>
+                        <br><small>${(file.size / 1024).toFixed(1)} KB</small>
+                    </div>
+                    <div class="photo-upload-actions">
+                        <button class="btn btn-danger btn-small" onclick="removeFile(${index})">✕</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            renderSelectedFiles();
+        }
+
+        function setupUploadZone() {
+            const zone = document.getElementById('upload-zone');
+            
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+            
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+            
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                selectedFiles = [...selectedFiles, ...files];
+                renderSelectedFiles();
+            });
+        }
+
+        async function handleUploadPhotos(e, albumId) {
+            e.preventDefault();
+            
+            if (selectedFiles.length === 0) {
+                alert('Select at least one photo');
+                return;
+            }
+            
+            const errorEl = document.getElementById('upload-error');
+            const progressEl = document.getElementById('upload-progress');
+            const progressBar = document.getElementById('upload-progress-bar');
+            const uploadBtn = document.getElementById('upload-btn');
+            
+            errorEl.style.display = 'none';
+            progressEl.style.display = 'block';
+            uploadBtn.disabled = true;
+            
+            const title = document.getElementById('photo-title').value;
+            const description = document.getElementById('photo-desc').value;
+            
+            let uploaded = 0;
+            
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const file = selectedFiles[i];
+                const formData = new FormData();
+                formData.append('photo', file);
+                formData.append('album_id', albumId);
+                formData.append('title', title);
+                formData.append('description', description);
+                
+                try {
+                    const response = await fetch(`${API_BASE}/api/admin/photos`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: getAdminHeaders()
+                    });
+                    
+                    if (!response.ok) {
+                        const data = await response.json();
+                        throw new Error(data.error || 'Upload failed');
+                    }
+                    
+                    uploaded++;
+                    progressBar.style.width = `${((i + 1) / selectedFiles.length) * 100}%`;
+                } catch (error) {
+                    errorEl.textContent = `Error uploading ${file.name}: ${error.message}`;
+                    errorEl.style.display = 'block';
+                }
+            }
+            
+            uploadBtn.disabled = false;
+            
+            if (uploaded > 0) {
+                alert(`Uploaded ${uploaded} photo${uploaded > 1 ? 's' : ''}!`);
+                closeModal();
+            }
+        }
+
+        function getAdminHeaders() {
+            return {};
+        }
+
+        async function logoutAdmin() {
+            try {
+                await apiCall('/api/admin/logout', { method: 'POST' });
+            } catch (e) {}
+            window.location.hash = '#/';
+        }
+
+        function showAuthModal(mode = 'login') {
+            showModal(mode === 'login' ? renderLoginForm() : renderRegisterForm());
+        }
+
+        function renderLoginForm() {
+            return `
+                <h3>Login</h3>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div id="login-form-error" class="error-message" style="display:none;"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="showAuthModal('register')">No account?</button>
+                        <button type="submit" class="btn btn-primary">Zaloguj</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function renderRegisterForm() {
+            return `
+                <h3>Register</h3>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" id="register-username" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="register-password" required minlength="4">
+                    </div>
+                    <div id="register-form-error" class="error-message" style="display:none;"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="showAuthModal('login')">Have an account?</button>
+                        <button type="submit" class="btn btn-primary">Zarejestruj</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const errorEl = document.getElementById('login-form-error');
+            errorEl.style.display = 'none';
+            
+            try {
+                const data = await apiCall('/api/login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: document.getElementById('login-username').value,
+                        password: document.getElementById('login-password').value
+                    })
+                });
+                
+                saveUserToStorage(data.user, data.token);
+                closeModal();
+                
+                if (window.location.hash.includes('/album/')) {
+                    window.location.reload();
+                }
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const errorEl = document.getElementById('register-form-error');
+            errorEl.style.display = 'none';
+            
+            try {
+                const data = await apiCall('/api/register', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: document.getElementById('register-username').value,
+                        password: document.getElementById('register-password').value
+                    })
+                });
+                
+                saveUserToStorage(data.user, data.token);
+                closeModal();
+                
+                if (window.location.hash.includes('/album/')) {
+                    window.location.reload();
+                }
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function logout() {
+            clearUserFromStorage();
+            if (window.location.hash.includes('/album/')) {
+                window.location.reload();
+            }
+        }
+
+        function router() {
+            const hash = window.location.hash;
+            const path = window.location.pathname;
+            
+            if (path.startsWith('/panel/album/')) {
+                const slug = path.replace('/panel/album/', '').replace(/\/$/, '');
+                if (slug) {
+                    renderAdminAlbum(slug);
+                } else {
+                    renderAdminDashboard();
+                }
+            } else if (hash === '#/panel/dashboard' || path === '/panel/dashboard') {
+                renderAdminDashboard();
+            } else if (hash.startsWith('#/album/')) {
+                const slug = hash.replace('#/album/', '');
+                renderAlbum(slug);
+            } else if (hash === '#/panel') {
+                renderAdminLogin();
+            } else if (path.startsWith('/album/')) {
+                const slug = path.replace('/album/', '').replace(/\/$/, '');
+                if (slug) {
+                    renderAlbum(slug);
+                } else {
+                    renderHome();
+                }
+            } else if (path === '/panel') {
+                renderAdminLogin();
+            } else if (!hash || hash === '#' || hash === '#/' || path === '/') {
+                renderHome();
+            } else {
+                renderHome();
+            }
+        }
+
+        window.addEventListener('hashchange', router);
+        window.addEventListener('load', () => {
+            loadUserFromStorage();
+            router();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
