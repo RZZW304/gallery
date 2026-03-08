@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Gallery</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>MY GALLERY</header>
+
+<div class="gallery">
+{% for photo in photos %}
+<img src="/photos/{{photo}}" onclick="openViewer(this.src)">
+{% endfor %}
+</div>
+
+<div class="viewer" id="viewer" onclick="closeViewer()">
+<img id="viewerImg">
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
