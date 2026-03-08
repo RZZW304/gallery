@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ album }} - GALLERY OF RZZW3004</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="roboto-mono-x1a9b">
+    GALLERY OF <span class="highlight">RZZW3004</span>
+</header>
+
+<div class="gallery">
+    {% for photo in photos %}
+    <img src="/photos/{{ album }}/{{ photo }}" onclick="openViewer(this.src)">
+    {% endfor %}
+</div>
+
+<div class="viewer" id="viewer" onclick="closeViewer()">
+    <img id="viewerImg">
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
