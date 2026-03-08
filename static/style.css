@@ -47,3 +47,15 @@ header{
     max-width:90%;
     max-height:90%;
 }
+.roboto-mono-x1a9b {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 48px; /* duży nagłówek, możesz zmienić */
+    color: #bbb; /* szary dla reszty napisu */
+}
+
+.roboto-mono-x1a9b .highlight {
+    color: #c0392b; /* czerwony mat */
+}
