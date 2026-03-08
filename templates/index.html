@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GALLERY OF RZZW3004</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="roboto-mono-x1a9b">
+    GALLERY OF <span class="highlight">RZZW3004</span>
+</header>
+
+<div class="albums">
+    {% for album in albums %}
+    <div class="album-card">
+        <a href="{{ url_for('album', album_name=album) }}">{{ album }}</a>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
